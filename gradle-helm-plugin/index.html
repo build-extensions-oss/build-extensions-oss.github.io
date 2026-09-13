@@ -640,7 +640,7 @@ on a Kubernetes cluster.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Gradle 7.6.1 or higher</p>
+<p>Gradle 8 or higher. The last Gradle Help Plugin with Gradle 7.6.1 support is 3.1.2.</p>
 </li>
 <li>
 <p>JDK 17 or higher (for running Gradle)</p>
@@ -1037,7 +1037,7 @@ and are easier to adapt for different build environments.</p>
 <pre class="prettyprint highlight"><code data-lang="groovy">helm {
     downloadClient {
         enabled = true
-        version = '3.4.1'
+        version = '4.2.4'
     }
 }</code></pre>
 </div>
@@ -1048,7 +1048,7 @@ and are easier to adapt for different build environments.</p>
 <pre class="prettyprint highlight"><code data-lang="kotlin">helm {
     downloadClient {
         enabled.set(true)
-        version.set("3.4.1")
+        version.set("4.2.4")
     }
 }</code></pre>
 </div>
@@ -1060,7 +1060,7 @@ and are easier to adapt for different build environments.</p>
 <div class="title">gradle.properties</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="properties">helm.client.download.enabled=true
-helm.client.download.version=3.4.1</code></pre>
+helm.client.download.version=4.2.4</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -1109,7 +1109,7 @@ same settings will automatically be used for all subprojects that use Helm.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>version</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm.client.download.version</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The version of the Helm client to be downloaded.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The latest version of Helm available at the time the plugin is published (currently <code>3.4.1</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The latest version of Helm available at the time the plugin is published (currently <code>4.2.4</code>)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"></td>
@@ -1142,10 +1142,8 @@ same settings will automatically be used for all subprojects that use Helm.</p>
 <p>With the <code>helm</code> plugin you can configure your Helm chart using a declarative DSL, and the corresponding Gradle
 tasks will be added automatically.</p>
 </div>
-<div class="paragraph">
-<p>Groovy</p>
-</div>
 <div class="listingblock primary">
+<div class="title">Groovy</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">plugins {
     id 'io.github.build-extensions-oss.helm' version '3.1.2'
@@ -1162,10 +1160,8 @@ helm {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Kotlin</p>
-</div>
 <div class="listingblock secondary">
+<div class="title">Kotlin</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="kotlin">plugins {
     id("io.github.build-extensions-oss.helm") version "3.1.2"
@@ -4614,23 +4610,23 @@ number of seconds (e.g. <code>210</code>).</p></td>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm.repository.&lt;name&gt;.url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm.repositories.&lt;name&gt;.url</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The URL of the repository.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm.repository.&lt;name&gt;.credentials.username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm.repositories.&lt;name&gt;.credentials.username</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Username for password-based authentication.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm.repository.&lt;name&gt;.credentials.password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm.repositories.&lt;name&gt;.credentials.password</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Password for password-based authentication.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm.repository.&lt;name&gt;.credentials.certificateFile</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm.repositories.&lt;name&gt;.credentials.certificateFile</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Client certificate file for certificate authentication.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm.repository.&lt;name&gt;.credentials.keyFile</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helm.repositories.&lt;name&gt;.credentials.keyFile</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Private key file for certificate authentication.</p></td>
 </tr>
 </tbody>
@@ -4756,7 +4752,7 @@ subdirectory <code>&lt;chart-name&gt;/&lt;rendering-name&gt;</code>.</p></td>
 <div id="footer">
 <div id="footer-text">
 Version 3.1.2<br>
-Last updated 2026-05-04 19:55:30 UTC
+Last updated 2026-09-13 20:30:40 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>

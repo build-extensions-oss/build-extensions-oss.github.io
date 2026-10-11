@@ -552,6 +552,7 @@ $(addBlockSwitches);
 <li><a href="#_defining_repositories">Defining Repositories</a>
 <ul class="sectlevel2">
 <li><a href="#_configuring_repository_credentials">Configuring Repository Credentials</a></li>
+<li><a href="#_oci_registries">OCI Registries</a></li>
 </ul>
 </li>
 <li><a href="#_filtering_chart_sources">Filtering Chart Sources</a>
@@ -1601,6 +1602,126 @@ helm {
         }
     }
 }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_oci_registries"><a class="anchor" href="#_oci_registries"></a>OCI Registries</h3>
+<div class="paragraph">
+<p>Helm can pull charts from OCI registries (dependency URLs starting with <code>oci://</code>). Such a registry has no
+index and cannot be registered with <code>helm repo add</code>, but it usually requires a <code>helm registry login</code> before
+charts can be pulled from it.</p>
+</div>
+<div class="paragraph">
+<p>Declare the registry in the <code>helm.registries</code> block, with its host and credentials:</p>
+</div>
+<div class="listingblock primary">
+<div class="title">Groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">helm {
+    registries {
+        artifactory {
+            host = 'registry.example.com'
+            credentials {
+                username = providers.environmentVariable('REGISTRY_USER')
+                password = providers.environmentVariable('REGISTRY_PASSWORD')
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock secondary">
+<div class="title">Kotlin</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="kotlin">helm {
+    registries {
+        create("artifactory") {
+            host.set("registry.example.com")
+            credentials {
+                username.set(providers.environmentVariable("REGISTRY_USER"))
+                password.set(providers.environmentVariable("REGISTRY_PASSWORD"))
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>host</code> is what <code>helm registry login</code> expects: the host name, optionally with a port
+(<code>registry.example.com:5000</code>), without a scheme or path. Certificate credentials and a <code>caFile</code> are supported as
+for repositories.</p>
+</div>
+<div class="paragraph">
+<p>There is no task to run: the tasks that update or build chart dependencies log in by themselves, right before
+they call Helm. They only log in</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>when they actually run - an up-to-date or skipped task does not contact the registry, and</p>
+</li>
+<li>
+<p>to registries that a dependency of their chart is pulled from, i.e. whose <code>host</code> matches the
+<code>repository: oci://&lt;host&gt;/&#8230;&#8203;</code> URL of a dependency in <code>Chart.yaml</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The password is passed to Helm on the standard input (<code>--password-stdin</code>), never on the command line.</p>
+</div>
+<div class="paragraph">
+<p>A repository in the <code>helm.repositories</code> block whose URL uses the <code>oci</code> scheme is treated the same way: the
+dependency tasks log in to it with its credentials, and it is left out of <code>helm repo add</code> and <code>helm repo update</code>.
+Running its <code>helmAdd&lt;X&gt;Repository</code> task explicitly logs in to the registry.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The plugin points Helm at its own configuration directory (see <code>helm.xdgConfigHome</code>), so a
+<code>helm registry login</code> done in a shell outside of Gradle is not visible to the Helm tasks of the build.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_logging_in_for_other_tasks"><a class="anchor" href="#_logging_in_for_other_tasks"></a>Logging in for other tasks</h4>
+<div class="paragraph">
+<p>For anything other than chart dependencies, register a <code>HelmRegistryLogin</code> task and wire it with <code>dependsOn</code>
+yourself. It logs in every time it runs, and it is not connected to any other task automatically:</p>
+</div>
+<div class="listingblock primary">
+<div class="title">Groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">import io.github.build.extensions.oss.gradle.plugins.helm.command.tasks.HelmRegistryLogin
+
+def helmRegistryLogin = tasks.register('helmRegistryLogin', HelmRegistryLogin) {
+    registry = 'registry.example.com'
+    username = providers.environmentVariable('REGISTRY_USER')
+    password = providers.environmentVariable('REGISTRY_PASSWORD')
+}</code></pre>
+</div>
+</div>
+<div class="listingblock secondary">
+<div class="title">Kotlin</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="kotlin">import io.github.build.extensions.oss.gradle.plugins.helm.command.tasks.HelmRegistryLogin
+
+val helmRegistryLogin by tasks.registering(HelmRegistryLogin::class) {
+    registry.set("registry.example.com")
+    username.set(providers.environmentVariable("REGISTRY_USER"))
+    password.set(providers.environmentVariable("REGISTRY_PASSWORD"))
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All of this is compatible with the configuration cache. Avoid calling <code>helm.execHelm("registry", "login")</code> from a
+<code>doFirst</code> block instead: the build script lambda references the <code>Project</code>, so Gradle cannot store the task in the
+configuration cache.</p>
 </div>
 </div>
 </div>
@@ -4756,7 +4877,7 @@ subdirectory <code>&lt;chart-name&gt;/&lt;rendering-name&gt;</code>.</p></td>
 <div id="footer">
 <div id="footer-text">
 Version 3.2.0<br>
-Last updated 2026-09-27 19:17:06 UTC
+Last updated 2026-10-11 14:01:40 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>

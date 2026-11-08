@@ -518,7 +518,7 @@ $(addBlockSwitches);
 <div id="header">
 <h1>Gradle Helm Plugin</h1>
 <div class="details">
-<span id="revnumber">version 3.3.0</span>
+<span id="revnumber">version 3.3.1</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -551,6 +551,8 @@ $(addBlockSwitches);
 </li>
 <li><a href="#_defining_repositories">Defining Repositories</a>
 <ul class="sectlevel2">
+<li><a href="#_retrying_repository_fetches">Retrying Repository Fetches</a></li>
+<li><a href="#_failing_when_a_repository_is_already_registered">Failing When a Repository Is Already Registered</a></li>
 <li><a href="#_configuring_repository_credentials">Configuring Repository Credentials</a></li>
 <li><a href="#_oci_registries">OCI Registries</a></li>
 </ul>
@@ -678,7 +680,7 @@ means that some features offered by the plugin may not be available in the CLI a
 <div class="title">Groovy</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">plugins {
-    id 'io.github.build-extensions-oss.helm' version '3.3.0'
+    id 'io.github.build-extensions-oss.helm' version '3.3.1'
 }</code></pre>
 </div>
 </div>
@@ -686,7 +688,7 @@ means that some features offered by the plugin may not be available in the CLI a
 <div class="title">Kotlin</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="kotlin">plugins {
-    id("io.github.build-extensions-oss.helm") version "3.3.0"
+    id("io.github.build-extensions-oss.helm") version "3.3.1"
 }</code></pre>
 </div>
 </div>
@@ -735,7 +737,7 @@ means that some features offered by the plugin may not be available in the CLI a
 <div class="title">Groovy</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">plugins {
-    id 'io.github.build-extensions-oss.helm-commands' version '3.3.0'
+    id 'io.github.build-extensions-oss.helm-commands' version '3.3.1'
 }</code></pre>
 </div>
 </div>
@@ -743,7 +745,7 @@ means that some features offered by the plugin may not be available in the CLI a
 <div class="title">Kotlin</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="kotlin">plugins {
-    id("io.github.build-extensions-oss.helm-commands") version "3.3.0"
+    id("io.github.build-extensions-oss.helm-commands") version "3.3.1"
 }</code></pre>
 </div>
 </div>
@@ -761,7 +763,7 @@ means that some features offered by the plugin may not be available in the CLI a
 <div class="title">Groovy</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">plugins {
-    id 'io.github.build-extensions-oss.helm' version '3.3.0'
+    id 'io.github.build-extensions-oss.helm' version '3.3.1'
 }</code></pre>
 </div>
 </div>
@@ -769,7 +771,7 @@ means that some features offered by the plugin may not be available in the CLI a
 <div class="title">Kotlin</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="kotlin">plugins {
-    id("io.github.build-extensions-oss.helm") version "3.3.0"
+    id("io.github.build-extensions-oss.helm") version "3.3.1"
 }</code></pre>
 </div>
 </div>
@@ -786,7 +788,7 @@ means that some features offered by the plugin may not be available in the CLI a
 <div class="title">Groovy</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">plugins {
-    id 'io.github.build-extensions-oss.helm-publish' version '3.3.0'
+    id 'io.github.build-extensions-oss.helm-publish' version '3.3.1'
 }</code></pre>
 </div>
 </div>
@@ -794,7 +796,7 @@ means that some features offered by the plugin may not be available in the CLI a
 <div class="title">Kotlin</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="kotlin">plugins {
-    id("io.github.build-extensions-oss.helm-publish") version "3.3.0"
+    id("io.github.build-extensions-oss.helm-publish") version "3.3.1"
 }</code></pre>
 </div>
 </div>
@@ -812,7 +814,7 @@ means that some features offered by the plugin may not be available in the CLI a
 <div class="title">Groovy</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">plugins {
-    id 'io.github.build-extensions-oss.helm-releases' version '3.3.0'
+    id 'io.github.build-extensions-oss.helm-releases' version '3.3.1'
 }</code></pre>
 </div>
 </div>
@@ -820,7 +822,7 @@ means that some features offered by the plugin may not be available in the CLI a
 <div class="title">Kotlin</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="kotlin">plugins {
-    id("io.github.build-extensions-oss.helm-releases") version "3.3.0"
+    id("io.github.build-extensions-oss.helm-releases") version "3.3.1"
 }</code></pre>
 </div>
 </div>
@@ -1147,7 +1149,7 @@ tasks will be added automatically.</p>
 <div class="title">Groovy</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">plugins {
-    id 'io.github.build-extensions-oss.helm' version '3.3.0'
+    id 'io.github.build-extensions-oss.helm' version '3.3.1'
 }
 
 helm {
@@ -1165,7 +1167,7 @@ helm {
 <div class="title">Kotlin</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="kotlin">plugins {
-    id("io.github.build-extensions-oss.helm") version "3.3.0"
+    id("io.github.build-extensions-oss.helm") version "3.3.1"
 }
 
 helm {
@@ -1522,6 +1524,120 @@ task building the file is run before the Helm chart is built.
         bitnami()
     }
 }</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_retrying_repository_fetches"><a class="anchor" href="#_retrying_repository_fetches"></a>Retrying Repository Fetches</h3>
+<div class="paragraph">
+<p><code>helmAdd&lt;X&gt;Repository</code>, <code>helmUpdateRepositories</code> and <code>helmUpdate&lt;X&gt;Dependencies</code> download a repository index, so a
+transient network failure fails the task. Each of them retries the failed Helm command a bounded number of times, and
+reports the failure once the attempts are exhausted:</p>
+</div>
+<div class="listingblock primary">
+<div class="title">Groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">import io.github.build.extensions.oss.gradle.plugins.helm.command.tasks.HelmAddRepository
+
+tasks.named('helmAddExampleRepository', HelmAddRepository) {
+    attempts = 3                          // default 1: no retry
+    retryDelay = Duration.ofSeconds(10)   // default 10 seconds
+}</code></pre>
+</div>
+</div>
+<div class="listingblock secondary">
+<div class="title">Kotlin</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="kotlin">import io.github.build.extensions.oss.gradle.plugins.helm.command.tasks.HelmAddRepository
+
+tasks.named&lt;HelmAddRepository&gt;("helmAddExampleRepository") {
+    attempts.set(3)                        // default 1: no retry
+    retryDelay.set(Duration.ofSeconds(10)) // default 10 seconds
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The retry carries a task past a failure that clears, and a command that keeps failing is still reported. Each attempt
+waits for the Helm command to finish, so the command a task runs next sees the previous one&#8217;s effect.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Helm 3&#8217;s <code>helm repo update</code> reports a repository it could not reach and still exits successfully, unless
+<code>--fail-on-repo-update-fail</code> is passed; Helm 4 fails by default. On Helm 3 the retry therefore covers
+<code>helm repo add</code> and <code>helm dependency update</code>, whose fetch failures do fail the command.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>helm repo update</code> downloads each repository index within Helm&#8217;s own two-minute limit, which a large index on a slow
+link can exceed. Set <code>repoUpdateTimeout</code> on <code>helmUpdateRepositories</code> to raise it for the command. The option needs a
+Helm client whose <code>repo update</code> accepts <code>--timeout</code> (Helm 3.19.1 or newer, or Helm 4); without it the task fails with an
+unknown flag.</p>
+</div>
+<div class="listingblock primary">
+<div class="title">Groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">import io.github.build.extensions.oss.gradle.plugins.helm.command.tasks.HelmUpdateRepositories
+
+tasks.named('helmUpdateRepositories', HelmUpdateRepositories) {
+    repoUpdateTimeout = Duration.ofMinutes(15)
+}</code></pre>
+</div>
+</div>
+<div class="listingblock secondary">
+<div class="title">Kotlin</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="kotlin">import io.github.build.extensions.oss.gradle.plugins.helm.command.tasks.HelmUpdateRepositories
+
+tasks.named&lt;HelmUpdateRepositories&gt;("helmUpdateRepositories") {
+    repoUpdateTimeout.set(Duration.ofMinutes(15))
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>helm repo add</code> has no such property: its <code>--timeout</code> (Helm 3.19.1 or newer, or Helm 4) can be passed through the task&#8217;s
+<code>extraArgs</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>helm dependency update</code> has no timeout option at all, so its download keeps Helm&#8217;s default.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_failing_when_a_repository_is_already_registered"><a class="anchor" href="#_failing_when_a_repository_is_already_registered"></a>Failing When a Repository Is Already Registered</h3>
+<div class="paragraph">
+<p><code>helmAdd&lt;X&gt;Repository</code> leaves an already-registered repository alone: Helm skips it when its configuration matches, and
+fails when it differs. Set the task&#8217;s <code>failIfExists</code> property to fail whenever the repository is registered, with a
+message naming it:</p>
+</div>
+<div class="listingblock primary">
+<div class="title">Groovy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">import io.github.build.extensions.oss.gradle.plugins.helm.command.tasks.HelmAddRepository
+
+tasks.named('helmAddExampleRepository', HelmAddRepository) {
+    failIfExists = true
+}</code></pre>
+</div>
+</div>
+<div class="listingblock secondary">
+<div class="title">Kotlin</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="kotlin">import io.github.build.extensions.oss.gradle.plugins.helm.command.tasks.HelmAddRepository
+
+tasks.named&lt;HelmAddRepository&gt;("helmAddExampleRepository") {
+    failIfExists.set(true)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The check reads the Helm repository configuration, so it needs no command line flag, and a configuration file that
+exists but cannot be read fails the task too. The property applies to classic repositories: an OCI registry is never
+added, so the task logs in to it either way.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2835,7 +2951,7 @@ or consider creating a PR to add support for it.</p>
 <div class="title">Groovy</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">plugins {
-    id 'io.github.build-extensions-oss.helm-publish' version '3.3.0'
+    id 'io.github.build-extensions-oss.helm-publish' version '3.3.1'
 }</code></pre>
 </div>
 </div>
@@ -2843,7 +2959,7 @@ or consider creating a PR to add support for it.</p>
 <div class="title">Kotlin</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="kotlin">plugins {
-    id("io.github.build-extensions-oss.helm-publish") version "3.3.0"
+    id("io.github.build-extensions-oss.helm-publish") version "3.3.1"
 }</code></pre>
 </div>
 </div>
@@ -3374,7 +3490,7 @@ instead of defining a custom file format.</p>
 <div class="title">Groovy</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">plugins {
-    id 'io.github.build-extensions-oss.helm-releases' version '3.3.0'
+    id 'io.github.build-extensions-oss.helm-releases' version '3.3.1'
 }</code></pre>
 </div>
 </div>
@@ -3382,7 +3498,7 @@ instead of defining a custom file format.</p>
 <div class="title">Kotlin</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="kotlin">plugins {
-    id("io.github.build-extensions-oss.helm-releases") version "3.3.0"
+    id("io.github.build-extensions-oss.helm-releases") version "3.3.1"
 }</code></pre>
 </div>
 </div>
@@ -4876,8 +4992,8 @@ subdirectory <code>&lt;chart-name&gt;/&lt;rendering-name&gt;</code>.</p></td>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 3.3.0<br>
-Last updated 2026-10-25 10:15:45 UTC
+Version 3.3.1<br>
+Last updated 2026-11-08 11:06:30 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
